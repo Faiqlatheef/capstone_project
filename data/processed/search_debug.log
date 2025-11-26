@@ -1,0 +1,82 @@
+2025-11-25 09:17:22,785 [simple_search] called with query: 'Recent breakthroughs in America'
+2025-11-25 09:17:22,987 [simple_search] returning mock results for query: 'Recent breakthroughs in America'
+2025-11-25 09:18:37,021 [simple_search] called with query: 'Recent breakthroughs in America'
+2025-11-25 09:18:37,222 [simple_search] returning mock results for query: 'Recent breakthroughs in America'
+2025-11-25 09:26:22,231 [simple_search] called with query: 'Recent breakthroughs in America'
+2025-11-25 09:26:22,432 [simple_search] returning mock results for query: 'Recent breakthroughs in America'
+2025-11-25 09:27:57,757 [simple_search] called with query: 'Recent breakthroughs in America'
+2025-11-25 09:27:57,959 [simple_search] returning mock results for query: 'Recent breakthroughs in America'
+2025-11-25 18:39:48,671 [simple_search] called with query: 'Recent breakthroughs in America'
+2025-11-25 18:39:48,882 [simple_search] returning mock results for query: 'Recent breakthroughs in America'
+2025-11-25 18:40:56,830 [simple_search] called with query: 'Recent breakthroughs in America'
+2025-11-25 18:40:57,031 [simple_search] returning mock results for query: 'Recent breakthroughs in America'
+2025-11-25 19:00:37,599 [simple_search] called with query: 'Recent breakthroughs in America'
+2025-11-25 19:00:37,600 [simple_search] genai resp source=genai_error hits=0
+2025-11-25 19:00:37,600 [simple_search] genai error: name 'GenAITool' is not defined
+2025-11-25 19:00:37,600 [simple_search] returning mock results for query: 'Recent breakthroughs in America'
+2025-11-25 19:10:42,484 [simple_search] called with query: 'test runtime genai availability'
+2025-11-25 19:10:42,486 [simple_search] genai resp source=genai_not_installed hits=0 error=genai_import_failed: cannot import name 'GoogleSearch' from 'google.generativeai.types' (C:\Users\HEALTHY MACHINES\OneDrive\Desktop\capstone_project_package\.venv\Lib\site-packages\google\generativeai\types\__init__.py)
+2025-11-25 19:10:42,486 [simple_search] returning mock results for query: 'test runtime genai availability'
+2025-11-25 19:12:57,533 [simple_search] called with query: 'Recent breakthroughs in America'
+2025-11-25 19:12:57,534 [simple_search] genai resp source=genai_not_installed hits=0 error=genai_import_failed: cannot import name 'GoogleSearch' from 'google.generativeai.types' (C:\Users\HEALTHY MACHINES\OneDrive\Desktop\capstone_project_package\.venv\Lib\site-packages\google\generativeai\types\__init__.py)
+2025-11-25 19:12:57,535 [simple_search] returning mock results for query: 'Recent breakthroughs in America'
+2025-11-25 19:14:11,633 [simple_search] called with query: 'Recent breakthroughs in America'
+2025-11-25 19:14:11,635 [simple_search] genai resp source=genai_not_installed hits=0 error=genai_import_failed: cannot import name 'GoogleSearch' from 'google.generativeai.types' (C:\Users\HEALTHY MACHINES\OneDrive\Desktop\capstone_project_package\.venv\Lib\site-packages\google\generativeai\types\__init__.py)
+2025-11-25 19:14:11,635 [simple_search] returning mock results for query: 'Recent breakthroughs in America'
+2025-11-25 20:42:51,741 [simple_search] called with query: 'Recent breakthroughs in America'
+2025-11-25 20:42:51,743 [simple_search] GENAI_AVAILABLE=True and credentials present -> calling _genai_web_search
+2025-11-25 20:42:51,745 [simple_search] genai resp source=genai_not_installed hits=0 error=genai_import_failed: cannot import name 'GoogleSearch' from 'google.generativeai.types' (C:\Users\HEALTHY MACHINES\OneDrive\Desktop\capstone_project_package\.venv\Lib\site-packages\google\generativeai\types\__init__.py)
+2025-11-25 20:42:51,745 [simple_search] genai error: genai_import_failed: cannot import name 'GoogleSearch' from 'google.generativeai.types' (C:\Users\HEALTHY MACHINES\OneDrive\Desktop\capstone_project_package\.venv\Lib\site-packages\google\generativeai\types\__init__.py)
+2025-11-25 20:42:51,745 [simple_search] returning mock results for query: 'Recent breakthroughs in America'
+2025-11-25 20:55:37,670 [simple_search] called with query: 'Recent breakthroughs in America'
+2025-11-25 20:55:37,671 [simple_search] GENAI_AVAILABLE=True and credentials present -> calling _genai_web_search
+2025-11-25 20:56:05,193 [simple_search] genai resp source=genai_raw_fallback hits=1 error=
+2025-11-25 20:58:06,732 [simple_search] called with query: 'Recent breakthroughs in Sri Lanka'
+2025-11-25 20:58:06,732 [simple_search] GENAI_AVAILABLE=True and credentials present -> calling _genai_web_search
+2025-11-25 20:59:02,133 [simple_search] genai resp source=genai_raw_fallback hits=1 error=
+2025-11-25 21:00:39,811 [simple_search] called with query: 'Recent breakthroughs in Sri Lanka'
+2025-11-25 21:00:39,812 [simple_search] GENAI_AVAILABLE=True and credentials present -> calling _genai_web_search
+2025-11-25 21:01:14,681 [simple_search] genai resp source=genai_raw_fallback hits=1 error=
+2025-11-25 21:05:33,202 [simple_search] called with query: 'Recent breakthroughs in Sri Lanka'
+2025-11-25 21:05:33,202 [simple_search] GENAI_AVAILABLE=True and credentials present -> calling _genai_web_search
+2025-11-25 21:15:32,439 [simple_search] genai resp source=genai_error hits=0 error=genai_raw_failed: Timeout of 600.0s exceeded, last exception: 503 failed to connect to all addresses; last error: UNKNOWN: ipv6:%5B2404:6800:4009:80a::200a%5D:443: tcp handshaker shutdown
+2025-11-25 21:15:32,440 [simple_search] genai error: genai_raw_failed: Timeout of 600.0s exceeded, last exception: 503 failed to connect to all addresses; last error: UNKNOWN: ipv6:%5B2404:6800:4009:80a::200a%5D:443: tcp handshaker shutdown
+2025-11-25 21:15:32,440 [simple_search] returning mock results for query: 'Recent breakthroughs in Sri Lanka'
+2025-11-25 22:00:52,689 [simple_search] [simple_search] called with query: 'Recent breakthroughs in Sri Lanka'
+2025-11-25 22:01:23,534 [simple_search] [simple_search] genai resp source=genai_raw_fallback hits=1 error=
+2025-11-25 22:08:48,368 [simple_search] [simple_search] called with query: 'Recent breakthroughs in America'
+2025-11-25 22:09:24,761 [simple_search] [simple_search] genai resp source=genai_raw_fallback hits=1 error=
+2025-11-25 22:09:24,965 [simple_search] [simple_search] called with query: 'Recent breakthroughs in Sri Lanka'
+2025-11-25 22:09:53,658 [simple_search] [simple_search] genai resp source=genai_raw_fallback hits=1 error=
+2025-11-25 22:27:12,270 [simple_search] [simple_search] called with query: 'Recent breakthroughs in India'
+2025-11-25 22:27:51,612 [simple_search] [simple_search] genai resp source=genai_raw_fallback hits=1 error=
+2025-11-25 22:28:54,445 [simple_search] [simple_search] called with query: 'Recent breakthroughs in India'
+2025-11-25 22:29:35,869 [simple_search] [simple_search] genai resp source=genai_raw_fallback hits=1 error=
+2025-11-25 22:32:38,235 [simple_search] [simple_search] called with query: 'Recent breakthroughs in India'
+2025-11-25 22:42:40,445 [simple_search] [simple_search] genai resp source=genai_error hits=0 error=genai_raw_failed: Timeout of 600.0s exceeded, last exception: 503 failed to connect to all addresses; last error: UNKNOWN: ipv4:216.58.203.42:443: tcp handshaker shutdown
+2025-11-25 22:42:40,446 [simple_search] [simple_search] returning mock results for query: 'Recent breakthroughs in India'
+2025-11-25 22:42:40,848 [simple_search] [simple_search] called with query: 'Recent breakthroughs in Canada'
+2025-11-25 22:43:18,138 [simple_search] [simple_search] genai resp source=genai_raw_fallback hits=1 error=
+2025-11-25 23:16:29,968 [simple_search] [simple_search] called with query: 'Recent breakthroughs in India'
+2025-11-25 23:16:33,355 [simple_search] [simple_search] genai runtime available and credentials present -> calling _genai_web_search
+2025-11-25 23:17:11,536 [simple_search] [simple_search] genai resp source=genai_raw_fallback hits=1 error=
+2025-11-25 23:17:11,738 [simple_search] [simple_search] called with query: 'Recent breakthroughs in Canada'
+2025-11-25 23:17:11,739 [simple_search] [simple_search] genai runtime available and credentials present -> calling _genai_web_search
+2025-11-25 23:17:46,219 [simple_search] [simple_search] genai resp source=genai_raw_fallback hits=1 error=
+2025-11-25 23:20:35,452 [simple_search] [simple_search] called with query: 'Recent breakthroughs in china'
+2025-11-25 23:20:35,453 [simple_search] [simple_search] genai runtime available and credentials present -> calling _genai_web_search
+2025-11-25 23:21:16,466 [simple_search] [simple_search] genai resp source=genai_raw_fallback hits=1 error=
+2025-11-25 23:22:35,807 [simple_search] [simple_search] called with query: 'Recent breakthroughs in china'
+2025-11-25 23:22:35,808 [simple_search] [simple_search] genai runtime available and credentials present -> calling _genai_web_search
+2025-11-25 23:32:32,167 [simple_search] [simple_search] attempt 1 failed: Timeout of 600.0s exceeded, last exception: 503 failed to connect to all addresses; last error: UNKNOWN: ipv4:142.251.12.95:443: tcp handshaker shutdown; retrying after 1.0s
+2025-11-25 23:42:27,922 [simple_search] [simple_search] attempt 2 failed: Timeout of 600.0s exceeded, last exception: 503 failed to connect to all addresses; last error: UNKNOWN: ipv6:%5B2404:6800:4009:827::200a%5D:443: tcp handshaker shutdown; retrying after 2.0s
+2025-11-25 23:48:21,901 [simple_search] [simple_search] called with query: 'Recent breakthroughs in china'
+2025-11-25 23:48:21,901 [simple_search] [simple_search] genai runtime available and credentials present -> calling _genai_web_search
+2025-11-25 23:48:52,497 [simple_search] [simple_search] genai resp source=genai_raw_fallback hits=1 error=
+2025-11-25 23:48:56,044 [simple_search] [simple_search] genai resp source=genai_raw_fallback hits=1 error=
+2025-11-26 06:02:08,381 [simple_search] [simple_search] called with query: 'Recent breakthroughs in china'
+2025-11-26 06:02:08,382 [simple_search] [simple_search] genai runtime available and credentials present -> calling _genai_web_search
+2025-11-26 06:02:38,416 [simple_search] [simple_search] genai resp source=genai_raw_fallback hits=1 error=
+2025-11-26 06:03:30,816 [simple_search] [simple_search] called with query: 'Recent breakthroughs in china'
+2025-11-26 06:03:30,817 [simple_search] [simple_search] genai runtime available and credentials present -> calling _genai_web_search
+2025-11-26 06:03:58,615 [simple_search] [simple_search] genai resp source=genai_raw_fallback hits=1 error=

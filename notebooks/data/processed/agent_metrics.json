@@ -1,0 +1,22 @@
+{
+  "pipeline_success": {
+    "value": 1.0,
+    "labels": {},
+    "ts": 1763863520.0123823
+  },
+  "eval_relevance": {
+    "value": 1.0,
+    "labels": {},
+    "ts": 1763863525.981315
+  },
+  "eval_completeness": {
+    "value": 0.265,
+    "labels": {},
+    "ts": 1763863525.9830573
+  },
+  "eval_factuality": {
+    "value": 0.8,
+    "labels": {},
+    "ts": 1763863525.9844568
+  }
+}

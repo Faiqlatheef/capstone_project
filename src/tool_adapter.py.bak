@@ -1,0 +1,179 @@
+# src/tool_adapter.py
+import os
+import time
+import requests
+from typing import Any, Dict
+import logging
+LOG_DIR = os.path.join(os.path.dirname(__file__), "..", "data", "processed")
+os.makedirs(LOG_DIR, exist_ok=True)
+log_path = os.path.join(LOG_DIR, "search_debug.log")
+logging.basicConfig(filename=log_path, level=logging.INFO, format="%(asctime)s %(message)s")
+
+# Force import generativeai and mark available even if import fails once
+try:
+    import google.generativeai as genai
+    GENAI_AVAILABLE = True
+except Exception as e:
+    print("FAILED TO IMPORT google.generativeai:", e)
+    GENAI_AVAILABLE = False
+
+class Tool:
+    def __init__(self, name: str, func):
+        self.name = name
+        self.func = func
+
+    def call(self, *args, **kwargs) -> Dict[str, Any]:
+        try:
+            result = self.func(*args, **kwargs)
+            return {"status": "ok", "result": result}
+        except Exception as e:
+            return {"status": "error", "error": str(e)}
+
+def _mock_results(query: str) -> Dict[str, Any]:
+    time.sleep(0.2)
+    return {
+        "query": query,
+        "hits": [
+            {"title": "Quantum advances 2024", "snippet": "New technique stabilizes qubits."},
+            {"title": "AI and quantum", "snippet": "Researchers explore hybrid models."}
+        ],
+        "source": "mock"
+    }
+
+def _google_cse_search(query: str) -> Dict[str, Any]:
+    api_key = os.environ.get("GOOGLE_API_KEY")
+    cx = os.environ.get("GOOGLE_CX") or os.environ.get("CUSTOM_SEARCH_CX")
+    if not api_key or not cx:
+        return {"query": query, "hits": [], "source": "no_cse_config"}
+
+    try:
+        endpoint = "https://www.googleapis.com/customsearch/v1"
+        params = {"key": api_key, "cx": cx, "q": query, "num": 5}
+        resp = requests.get(endpoint, params=params, timeout=10)
+        resp.raise_for_status()
+        data = resp.json()
+        hits = []
+        for item in data.get("items", []):
+            hits.append({
+                "title": item.get("title"),
+                "link": item.get("link"),
+                "snippet": item.get("snippet")
+            })
+        return {"query": query, "hits": hits, "source": "google_cse"}
+    except Exception as e:
+        try:
+            err_text = resp.text
+        except Exception:
+            err_text = str(e)
+        return {"query": query, "hits": [], "error": f"{str(e)} | resp_text: {err_text}", "source": "error_fallback"}
+
+
+def _genai_web_search(query: str) -> Dict[str, Any]:
+    """
+    Robust wrapper: try to use Gemini web-search tool if available.
+    If the SDK types for the web-search tool are missing, fall back to:
+      - Google Custom Search JSON API (if GOOGLE_API_KEY + GOOGLE_CX present), or
+      - a direct generate_content prompt (non-tool) returning raw output, or
+      - mock
+    """
+    # runtime import so this function works even if earlier module-level imports failed
+    try:
+        import google.generativeai as genai_runtime
+    except Exception as e:
+        return {"query": query, "hits": [], "error": f"genai_import_failed: {e}", "source": "genai_not_installed"}
+
+    # require credentials (either ADC or API key)
+    if not (os.environ.get("GOOGLE_APPLICATION_CREDENTIALS") or os.environ.get("GOOGLE_API_KEY")):
+        return {"query": query, "hits": [], "error": "no_credentials", "source": "genai_no_creds"}
+
+    # try to import the web-search Tool types (may not exist in older SDK)
+    try:
+        from google.generativeai.types import Tool as GenAITool, GoogleSearch as GenAIGoogleSearch
+        # If we got here, SDK supports the web-search tool -> call it
+        model = genai_runtime.GenerativeModel("models/gemini-pro-latest")
+        prompt = f"Search the web for up-to-date findings about: {query}\nReturn up to 5 concise results with title and snippet."
+        resp = model.generate_content(contents=prompt, tools=[GenAITool(google_search=GenAIGoogleSearch())])
+        text = getattr(resp, "text", None) or str(resp)
+        lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
+        hits = [{"title": ln[:80], "snippet": ln} for ln in lines[:5]]
+        return {"query": query, "hits": hits, "source": "genai_search", "raw": text}
+    except ImportError as ie:
+        # SDK types missing (this is your current case)
+        # Fallback 1: use Google Custom Search JSON API if configured
+        api_key = os.environ.get("GOOGLE_API_KEY")
+        cx = os.environ.get("GOOGLE_CX") or os.environ.get("CUSTOM_SEARCH_CX")
+        if api_key and cx:
+            try:
+                return _google_cse_search(query)
+            except Exception as e:
+                return {"query": query, "hits": [], "error": f"cse_fallback_failed: {e}", "source": "cse_error"}
+        # Fallback 2: try a direct generate_content call (no tools) and return raw text (note: not truly web-search)
+        try:
+            model = genai_runtime.GenerativeModel("models/gemini-pro-latest")
+            prompt = f"Using your knowledge and any up-to-date sources you can access, summarize recent findings for: {query}\nIf you cannot access live web, say so and provide plausible recent-seeming results with a cautionary note."
+            resp = model.generate_content(contents=prompt)
+            text = getattr(resp, "text", None) or str(resp)
+            # return as a single raw hit so UI shows something
+            return {"query": query, "hits": [{"title": "GENAI_RAW", "snippet": text[:400]}], "source": "genai_raw_fallback", "raw": text}
+        except Exception as e2:
+            return {"query": query, "hits": [], "error": f"genai_raw_failed: {e2}", "source": "genai_error"}
+    except Exception as e:
+        # any other exception from the tool call
+        return {"query": query, "hits": [], "error": str(e), "source": "genai_error"}
+
+
+
+def simple_search(query: str) -> Dict[str, Any]:
+    """
+    Robust top-level search adapter:
+      1) Try Gemini (google-generativeai) if SDK was importable at module-import time and
+         either ADC or API key is available.
+      2) Else try Google Custom Search API if key+cx present.
+      3) Else return mock results.
+    """
+    time.sleep(0.2)
+    logging.info(f"[simple_search] called with query: {query!r}")
+
+    # Prefer using the module-level flag (set once at import) instead of a second runtime import check.
+    genai_creds = bool(os.environ.get("GOOGLE_APPLICATION_CREDENTIALS") or os.environ.get("GOOGLE_API_KEY"))
+    if GENAI_AVAILABLE and genai_creds:
+        logging.info("[simple_search] GENAI_AVAILABLE=True and credentials present -> calling _genai_web_search")
+        try:
+            resp = _genai_web_search(query)
+            logging.info(f"[simple_search] genai resp source={resp.get('source')} hits={len(resp.get('hits', []))} error={resp.get('error', '')}")
+            if resp.get("hits"):
+                return resp
+            # If genai returned raw text, surface it so the UI can show something useful
+            if resp.get("raw"):
+                logging.info("[simple_search] genai returned raw but no structured hits; returning raw in a single hit")
+                return {
+                    "query": query,
+                    "hits": [{"title": "GENAI_RAW", "snippet": resp.get("raw")[:400]}],
+                    "source": resp.get("source"),
+                    "raw": resp.get("raw"),
+                }
+            # If genai returned an error, log it and fall through to CSE/mock
+            if resp.get("error"):
+                logging.warning(f"[simple_search] genai error: {resp.get('error')}")
+        except Exception as e:
+            logging.exception("[simple_search] unexpected exception calling _genai_web_search: %s", e)
+
+    # 2) Try Google Custom Search JSON API if configured
+    api_key = os.environ.get("GOOGLE_API_KEY")
+    cx = os.environ.get("GOOGLE_CX") or os.environ.get("CUSTOM_SEARCH_CX")
+    if api_key and cx:
+        logging.info("[simple_search] GOOGLE_API_KEY and CX present -> calling _google_cse_search")
+        try:
+            resp = _google_cse_search(query)
+            logging.info(f"[simple_search] cse resp source={resp.get('source')} hits={len(resp.get('hits', []))} error={resp.get('error', '')}")
+            if resp.get("hits"):
+                return resp
+            if resp.get("error"):
+                logging.warning(f"[simple_search] cse error: {resp.get('error')}")
+        except Exception as e:
+            logging.exception("[simple_search] unexpected exception calling CSE: %s", e)
+
+    # 3) fallback to mock
+    logging.info(f"[simple_search] returning mock results for query: {query!r}")
+    return _mock_results(query)
+

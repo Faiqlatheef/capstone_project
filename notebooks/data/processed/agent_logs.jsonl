@@ -1,0 +1,10 @@
+{"event": "user_query", "session": "demo-session-1", "query": "Recent breakthroughs in quantum computing and impact on AI (2024-2025)", "ts": 1763861357.5903776}
+{"event": "research_done", "details": {"role": "ResearchAgent", "type": "findings", "content": "Quantum advances 2024 - New technique stabilizes qubits.\nAI and quantum - Researchers explore hybrid models."}, "ts": 1763861357.7916472}
+{"event": "summary_done", "details": {"role": "SummarizerAgent", "type": "summary", "content": "Summary: Quantum advances 2024 - New technique stabilizes qubits.\nAI and quantum - Researchers explore hybrid models."}, "ts": 1763861357.7922716}
+{"event": "critique_done", "details": {"role": "CriticAgent", "type": "critique", "content": "Critique: check factual claims and add citations where missing."}, "ts": 1763861357.7929251}
+{"event": "draft_done", "details": {"length": 212}, "ts": 1763861357.793417}
+{"event": "user_query", "session": "demo-session-1", "query": "Recent breakthroughs in quantum computing and impact on AI (2024-2025)", "ts": 1763863519.8076787}
+{"event": "research_done", "details": {"role": "ResearchAgent", "type": "findings", "content": "Quantum advances 2024 - New technique stabilizes qubits.\nAI and quantum - Researchers explore hybrid models."}, "ts": 1763863520.0090096}
+{"event": "summary_done", "details": {"role": "SummarizerAgent", "type": "summary", "content": "Summary: Quantum advances 2024 - New technique stabilizes qubits.\nAI and quantum - Researchers explore hybrid models."}, "ts": 1763863520.0097148}
+{"event": "critique_done", "details": {"role": "CriticAgent", "type": "critique", "content": "Critique: check factual claims and add citations where missing."}, "ts": 1763863520.0103586}
+{"event": "draft_done", "details": {"length": 212}, "ts": 1763863520.0109677}

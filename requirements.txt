@@ -1,0 +1,13 @@
+# Minimal requirements - extend as needed
+jupyter
+nbformat
+google-api-python-client
+openai
+pandas
+numpy
+scikit-learn
+matplotlib
+seaborn
+streamlit
+google-generativeai
+requests
