@@ -1,5 +1,4 @@
-# AI Research Team — Capstone (Auto-generated)
-
+# AI Research By Faiq — Capstone
 **Use case:** Multi-agent research pipeline combining search, summarization, critique, drafting, memory, observability, and deployment guidance.
 
 ## How to run
