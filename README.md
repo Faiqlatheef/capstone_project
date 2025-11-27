@@ -5,6 +5,11 @@
 1. Open `notebooks/03_Final_Project.ipynb` in Kaggle or locally.
 2. By default the notebook runs in mock/dry-run mode (`USE_MOCK=True`). This does not require API keys.
 3. To enable real APIs, set `USE_MOCK=False` and configure your secrets per instructions in this repo.
+4. If You need to run fully UI site use this steps
+   1. python -m venv .venv
+   2. .venv\Scripts\activate.bat
+   3. pip install -r requirements.txt
+   4. streamlit run ui/app.py
 
 ## Deliverables
 - `notebooks/03_Final_Project.ipynb` — final polished notebook
